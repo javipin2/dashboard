@@ -10,11 +10,11 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Reemplaza por una clave segura en pr
 
 # Configuración de la base de datos
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '',      # Ingresa tu contraseña si es necesaria
-    'database': 'cancha_dueño',
-    'port': 3306
+    'host': 'gondola.proxy.rlwy.net',  # Host de Railway
+    'user': 'root',  # Usuario de Railway
+    'password': 'MoFLWaJlAIylwignWbYdIDCtAvIUDQMyO',  # Contraseña obtenida de Railway
+    'database': 'railway',  # Nombre de la base de datos en Railway
+    'port': 13868  # Puerto asignado por Railway
 }
 
 def get_db_connection():
