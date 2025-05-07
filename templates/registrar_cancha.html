@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Registrar Cancha</h2>
+  <form action="/registrar_cancha" method="POST">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" name="descripcion" id="descripcion"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="imagen" class="form-label">Ruta de Imagen</label>
+      <input type="text" class="form-control" name="imagen" id="imagen">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" name="techada" id="techada">
+      <label class="form-check-label" for="techada">¿Es techada?</label>
+    </div>
+    <div class="mb-3">
+      <label for="ubicacion" class="form-label">Ubicación</label>
+      <input type="text" class="form-control" name="ubicacion" id="ubicacion">
+    </div>
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input type="number" step="0.01" class="form-control" name="precio" id="precio">
+    </div>
+    <div class="mb-3">
+      <label for="servicios" class="form-label">Servicios</label>
+      <textarea class="form-control" name="servicios" id="servicios"></textarea>
+    </div>
+    <!-- Campo Sede: Selección con solo dos opciones -->
+    <div class="mb-3">
+      <label for="sede" class="form-label">Sede</label>
+      <select name="sede" id="sede" class="form-select" required>
+        <option value="">Seleccione la sede</option>
+        <option value="Sede 1">Sede 1</option>
+        <option value="Sede 2">Sede 2</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Cancha</button>
+  </form>
+</div>
+{% endblock %}

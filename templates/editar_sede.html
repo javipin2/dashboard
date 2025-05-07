@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Editar Sede</h2>
+  <form action="/edit_sede_value/{{ old_value }}" method="POST">
+    <div class="mb-3">
+      <label for="new_value" class="form-label">Nuevo Valor para Sede</label>
+      <input type="text" class="form-control" id="new_value" name="new_value" placeholder="Ej. Sede 2" required>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}

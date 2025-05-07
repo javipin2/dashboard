@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Estadísticas de Reservas</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Reservas por Hora</h5>
+      <canvas id="chartHoras"></canvas>
+    </div>
+    <div class="col-md-6">
+      <h5>Reservas por Día de la Semana</h5>
+      <canvas id="chartDias"></canvas>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Gráfico por Hora
+  const ctxHoras = document.getElementById('chartHoras').getContext('2d');
+  const chartHoras = new Chart(ctxHoras, {
+    type: 'line',
+    data: {
+      labels: {{ horas|tojson }},
+      datasets: [{
+        label: 'Reservas',
+        data: {{ reservas_por_hora|tojson }},
+        backgroundColor: 'rgba(75, 192, 192, 0.4)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        fill: true,
+        tension: 0.1
+      }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+  });
+
+  // Gráfico por Día de la Semana
+  const ctxDias = document.getElementById('chartDias').getContext('2d');
+  const chartDias = new Chart(ctxDias, {
+    type: 'pie',
+    data: {
+      labels: {{ dias|tojson }},
+      datasets: [{
+        label: 'Reservas',
+        data: {{ reservas_por_dia|tojson }},
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(199, 199, 199, 0.6)'
+        ]
+      }]
+    },
+    options: {}
+  });
+</script>
+{% endblock %}

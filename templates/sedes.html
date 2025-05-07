@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Sedes Registradas (Valores en canchas)</h2>
+  <table id="table_sedes" class="table table-striped table-bordered">
+    <thead>  
+      <a href="/registrar_cancha" class="btn btn-success">Agregar Nueva Cancha</a>
+
+      <tr>
+        <th>Sede</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for registro in sedes %}
+      <tr>
+        <td>{{ registro.sede }}</td>
+        <td>
+          <a href="/edit_sede_value/{{ registro.sede }}" class="btn btn-sm btn-primary">Editar</a>
+          <!-- Puedes agregar un botón para eliminar o restablecer, si es necesario -->
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

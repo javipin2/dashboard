@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Agregar Nueva Reserva</h2>
+
+  <form action="{{ url_for('agregar_reserva') }}" method="POST">
+    <div class="mb-3">
+      <label for="cliente_id" class="form-label">Seleccionar Cliente</label>
+      <select name="cliente_id" id="cliente_id" class="form-select" onchange="autoFillClient()">
+        <option value="">-- Seleccionar Cliente --</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input type="text" class="form-control" name="telefono" id="telefono" required>
+    </div>
+    <div class="mb-3">
+      <label for="fecha" class="form-label">Fecha</label>
+      <input type="date" class="form-control" name="fecha" id="fecha" value="{{ fecha }}" required onchange="updateHours()">
+    </div>
+    <div class="mb-3">
+      <label for="hora" class="form-label">Hora</label>
+      <select name="hora" id="hora" class="form-select" required></select>
+    </div>
+    <div class="mb-3">
+      <label for="estado" class="form-label">Estado</label>
+      <select name="estado" id="estado" class="form-select">
+        <option value="Pendiente">Pendiente</option>
+        <option value="Confirmado">Confirmado</option>
+        <option value="Cancelado">Cancelado</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="valor" class="form-label">Valor</label>
+      <input type="number" class="form-control" name="valor" id="valor">
+    </div>
+    <div class="mb-3">
+      <label for="tipo_evento" class="form-label">Tipo de Evento</label>
+      <input type="text" class="form-control" name="tipo_evento" id="tipo_evento" value="Fútbol">
+    </div>
+    <div class="mb-3">
+      <label for="sede" class="form-label">Sede</label>
+      <select name="sede" id="sede" class="form-select">
+        <option value="Sede 1">Sede 1</option>
+        <option value="Sede 2">Sede 2</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Reserva</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetchClientes();
+      updateHours();
+    });
+
+    function fetchClientes() {
+      fetch("/get_clientes")
+        .then(response => response.json())
+        .then(data => {
+          const clientes = data.clientes;
+          const clienteSelect = document.getElementById("cliente_id");
+          clienteSelect.innerHTML = '<option value="">-- Seleccionar Cliente --</option>';
+          
+          clientes.forEach(cliente => {
+            let option = document.createElement("option");
+            option.value = cliente.id;
+            option.textContent = `${cliente.nombre} (${cliente.telefono})`;
+            option.setAttribute("data-nombre", cliente.nombre);
+            option.setAttribute("data-telefono", cliente.telefono);
+            clienteSelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error("Error al cargar clientes:", error));
+    }
+
+    function autoFillClient() {
+      const clienteSelect = document.getElementById("cliente_id");
+      const selectedOption = clienteSelect.options[clienteSelect.selectedIndex];
+
+      if (selectedOption.value) {
+        document.getElementById("nombre").value = selectedOption.getAttribute("data-nombre");
+        document.getElementById("telefono").value = selectedOption.getAttribute("data-telefono");
+      } else {
+        document.getElementById("nombre").value = "";
+        document.getElementById("telefono").value = "";
+      }
+    }
+
+    function updateHours() {
+      const fechaSeleccionada = document.getElementById("fecha").value;
+      fetch(`/get_ocupadas?fecha=${fechaSeleccionada}`)
+        .then(response => response.json())
+        .then(data => {
+          const ocupadas = data.ocupadas;
+          const horarioSelect = document.getElementById("hora");
+          horarioSelect.innerHTML = ""; // Limpiar el select
+
+          for (let hr = 8; hr <= 22; hr++) {
+            const option = document.createElement("option");
+            option.value = `${hr}:00`;
+            option.textContent = `${hr}:00`;
+
+            if (ocupadas.includes(hr)) {
+              option.disabled = true;
+              option.textContent += " (Ocupado)";
+            }
+
+            horarioSelect.appendChild(option);
+          }
+        })
+        .catch(error => console.error("Error al cargar horas ocupadas:", error));
+    }
+  </script>
+</div>
+{% endblock %}
