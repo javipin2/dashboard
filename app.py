@@ -12,7 +12,7 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Reemplaza por una clave segura en pr
 db_config = {
     'host': 'gondola.proxy.rlwy.net',  # Host de Railway
     'user': 'root',  # Usuario de Railway
-    'password': 'MoFLWaJlAIylwignWbYdIDCtAvIUDQMyO',  # Contraseña obtenida de Railway
+    'password': 'MoFLWaJIAlyWignWbYdIDCtAvIUDQMyo',  # Contraseña obtenida de Railway
     'database': 'railway',  # Nombre de la base de datos en Railway
     'port': 13868  # Puerto asignado por Railway
 }
